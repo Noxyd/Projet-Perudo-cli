@@ -1,4 +1,5 @@
 package perudoV1;
+import java.io.IOException;
 import java.rmi.*;
 
 public class Main {
@@ -8,8 +9,16 @@ public class Main {
 			
 			int id_partie;
 			
+			Menu le_menu = new Menu();
+			
+			le_menu.choix();
+			
+			
+			/*
 			try {
 				gm = (GameManager) Naming.lookup("rmi://localhost:1099/Perudo");
+				
+				
 				
 				id_partie = gm.rejoindre("Sam");
 				
@@ -19,8 +28,7 @@ public class Main {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		
 	}
-
 }
