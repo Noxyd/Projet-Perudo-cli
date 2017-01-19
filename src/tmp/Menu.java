@@ -1,4 +1,4 @@
-package perudoV1;
+package tmp;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -15,9 +15,7 @@ public class Menu {
 	
 	public Menu(){
 		try {
-			gm = (GameManager) Naming.lookup("rmi://localhost:1099/Perudo");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			gm = (GameManager) Naming.lookup("rmi://localhost:1099/gm");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -26,7 +24,6 @@ public class Menu {
 	
 	public void choix(){
 		int id_partie;
-		int[] tab_partie;
 		int choix;
 		Scanner sc = new Scanner(System.in);
 		
@@ -38,19 +35,11 @@ public class Menu {
 		do{
 			switch (choix) {
 				case JOUER:
-					this.jouer_partie();
-				try {
-					id_partie=gm.recherche_partie();
-					System.out.println(id_partie);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+					this.jouer_partie();			
 				
 					break;
 					
-				case RECHERCHER:
+				/*case RECHERCHER:
 					this.rech_partie();
 					try {
 						gm.recherche_partie_list();
@@ -59,7 +48,7 @@ public class Menu {
 						e.printStackTrace();
 					}
 					break;
-					
+				*/
 				case QUITTER:
 					System.out.println("");
 					System.out.println("Au revoir !");
@@ -88,13 +77,19 @@ public class Menu {
 	}
 	
 	public void jouer_partie(){
+		String url;
 		System.out.println("======================");
 		System.out.println("PERUDO by STRI | Jouer une partie Rapide");
-		System.out.println("======================");
-		System.out.println("");
-		System.out.println("");
+		System.out.println("======================\n\n");
 		
-		
+		System.out.println("Recherche d'une partie : ");
+		try {
+			url = gm.recherche_partie();
+			
+			System.out.println("Partie trouvée, url : "+url);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void rech_partie(){

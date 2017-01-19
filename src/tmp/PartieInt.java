@@ -1,4 +1,4 @@
-package perudoV1;
+package tmp;
 
 import java.rmi.RemoteException;
 
