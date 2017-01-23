@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -39,7 +40,7 @@ public class Menu {
 				
 					break;
 					
-				/*case RECHERCHER:
+				case RECHERCHER:
 					this.rech_partie();
 					try {
 						gm.recherche_partie_list();
@@ -48,7 +49,7 @@ public class Menu {
 						e.printStackTrace();
 					}
 					break;
-				*/
+				
 				case QUITTER:
 					System.out.println("");
 					System.out.println("Au revoir !");
@@ -93,11 +94,35 @@ public class Menu {
 	}
 	
 	public void rech_partie(){
+		ArrayList url;
 		System.out.println("======================");
 		System.out.println("PERUDO by STRI | Recherche de partie");
-		System.out.println("======================");
+		System.out.println("======================\n\n");
+		System.out.println("Recherche d'une partie : ");
+		try {
+			url = gm.recherche_partie_list();
+			
+			System.out.println("Partie trouvée(s):");
+			for(int i = 0; i < url.size(); i++) { 
+				System.out.print((i+1)+". ");
+			    System.out.println(url.get(i));
+			}  
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		System.out.println("");
-		System.out.println("");
+		System.out.println("Veuillez selectionner le numero de la partie a rejoindre :");
+		Scanner s = new Scanner(System.in);;
+		int p = s.nextInt();
+		System.out.println("Vous avez selectionner la partie :");
+		try {
+			url = gm.recherche_partie_list();
+			System.out.println(url.get(p-1));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 	}
