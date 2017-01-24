@@ -87,7 +87,7 @@ public class Menu {
 		try {
 			url = gm.recherche_partie();
 			
-			System.out.println("Partie trouvée, url : "+url);
+			System.out.println("Partie trouvï¿½e, url : "+url);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -102,7 +102,7 @@ public class Menu {
 		try {
 			url = gm.recherche_partie_list();
 			
-			System.out.println("Partie trouvée(s):");
+			System.out.println("Partie trouvï¿½e(s):");
 			for(int i = 0; i < url.size(); i++) { 
 				System.out.print((i+1)+". ");
 			    System.out.println(url.get(i));
@@ -124,6 +124,13 @@ public class Menu {
 		}
 		
 		
+		
+	}
+	
+	
+	public void printToAll(String msg){
+		
+		System.out.println("Message du serveur: "+msg);
 		
 	}
 }
