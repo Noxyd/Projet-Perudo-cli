@@ -144,7 +144,6 @@ public class Menu {
 			}catch(Exception e){
 				System.out.println("Oops!! Please enter only integral numbers");
 				System.out.println(s.next() + " was not valid input.");
-				System.out.println("Veuillez Sélectionner un choix valide !");
 				w=0;
 			}
 			}while(w==0);
