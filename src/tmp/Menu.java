@@ -15,7 +15,7 @@ public class Menu {
 	private final int QUITTER = 3;
 	
 	public Menu(){
-		try {
+	    try {
 			gm = (GameManager) Naming.lookup("rmi://localhost:1099/gm");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,18 +26,22 @@ public class Menu {
 	public void choix(){
 		int id_partie;
 		int choix;
+		int w = 0;
 		Scanner sc = new Scanner(System.in);
 		
 		this.welcome_screen();
 		
 		System.out.print("### Saisir : ");
-		choix = sc.nextInt();
+		
+		do{try {
+			choix = sc.nextInt();
+		
 		
 		do{
 			switch (choix) {
 				case JOUER:
 					this.jouer_partie();			
-				
+					w=1;
 					break;
 					
 				case RECHERCHER:
@@ -48,20 +52,31 @@ public class Menu {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					w=1;
 					break;
 				
 				case QUITTER:
 					System.out.println("");
 					System.out.println("Au revoir !");
+					w=1;
 					break;
 		
 		
 				default:
-					choix=0;
+					w=0;
+					System.out.println("Veuillez Sélectionner un choix valide !");
+					System.out.print("### Saisir : ");
+					choix = sc.nextInt();
 					break;
 			}
-		}while(choix == 0);
-		
+		}while(w == 0);
+		} catch(Exception e){
+			System.out.println("Oops!! Please enter only integral numbers");
+			System.out.println(sc.next() + " was not valid input.");
+			System.out.println("Veuillez Sélectionner un choix valide !");
+			System.out.print("### Saisir : ");
+			choix = 0;
+		}}while(w == 0);
 	}
 	
 	public void welcome_screen(){
@@ -95,13 +110,16 @@ public class Menu {
 	
 	public void rech_partie(){
 		ArrayList url;
+		int p =0;
+		int w= 0;
+		int l=0;
 		System.out.println("======================");
 		System.out.println("PERUDO by STRI | Recherche de partie");
 		System.out.println("======================\n\n");
 		System.out.println("Recherche d'une partie : ");
 		try {
 			url = gm.recherche_partie_list();
-			
+			l = url.size();
 			System.out.println("Partie trouvï¿½e(s):");
 			for(int i = 0; i < url.size(); i++) { 
 				System.out.print((i+1)+". ");
@@ -111,9 +129,25 @@ public class Menu {
 			e.printStackTrace();
 		}
 		System.out.println("");
-		System.out.println("Veuillez selectionner le numero de la partie a rejoindre :");
+//		System.out.println("Veuillez selectionner le numero de la partie a rejoindre :");
 		Scanner s = new Scanner(System.in);;
-		int p = s.nextInt();
+		
+			do{try {
+				System.out.println("Veuillez selectionner le numero de la partie a rejoindre :");
+				p = s.nextInt();
+				if(p > l || p < 1){
+					System.out.println("Cette partie n'existe pas !");
+					w=0;
+				}else{
+				w=1;
+				}
+			}catch(Exception e){
+				System.out.println("Oops!! Please enter only integral numbers");
+				System.out.println(s.next() + " was not valid input.");
+				w=0;
+			}
+			}while(w==0);
+		
 		System.out.println("Vous avez selectionner la partie :");
 		try {
 			url = gm.recherche_partie_list();
@@ -122,8 +156,7 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+			
 		
 	}
 	
