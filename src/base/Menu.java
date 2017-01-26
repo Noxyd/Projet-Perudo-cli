@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Menu {
 	
 	GameManager gm;
+	PartieClientImpl partie_courante;
 	private final int JOUER = 1;
 	private final int RECHERCHER = 2;
 	private final int QUITTER = 3;
@@ -17,6 +18,9 @@ public class Menu {
 	public Menu(){
 	    try {
 			gm = (GameManager) Naming.lookup("rmi://localhost:1099/gm");
+			
+			partie_courante = new PartieClientImpl();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,6 +112,7 @@ public class Menu {
 			
 			//Aller dans le lobby
 			
+			partie_courante.lobby(url);
 			
 		} catch (RemoteException e) {
 			e.printStackTrace();
