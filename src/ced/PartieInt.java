@@ -1,6 +1,7 @@
 package ced;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface PartieInt extends java.rmi.Remote{
 	
@@ -13,5 +14,10 @@ public interface PartieInt extends java.rmi.Remote{
 	public void setState(boolean value) throws java.rmi.RemoteException;
 	
 	public void listerJoueurs() throws RemoteException;
+	
+	public String urlPseudo(String url);
+	
+	public ArrayList recupDe(String url);
+
 
 }

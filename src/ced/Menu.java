@@ -166,10 +166,4 @@ public class Menu {
 		
 	}
 	
-	
-	public void printToAll(String msg){
-		
-		System.out.println("Message du serveur: "+msg);
-		
-	}
 }
