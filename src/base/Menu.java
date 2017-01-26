@@ -1,4 +1,4 @@
-package tmp;
+package base;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -33,50 +33,52 @@ public class Menu {
 		
 		System.out.print("### Saisir : ");
 		
-		do{try {
-			choix = sc.nextInt();
-		
-		
 		do{
-			switch (choix) {
-				case JOUER:
-					this.jouer_partie();			
-					w=1;
-					break;
-					
-				case RECHERCHER:
-					this.rech_partie();
-					try {
-						gm.recherche_partie_list();
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					w=1;
-					break;
+			try {
+				choix = sc.nextInt();
+		
+		
+				do{
+					switch (choix) {
+						case JOUER:
+							this.jouer_partie();			
+							w=1;
+							break;
+							
+						case RECHERCHER:
+							this.rech_partie();
+							try {
+								gm.recherche_partie_list();
+							} catch (RemoteException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							w=1;
+							break;
+						
+						case QUITTER:
+							System.out.println("");
+							System.out.println("Au revoir !");
+							w=1;
+							break;
 				
-				case QUITTER:
-					System.out.println("");
-					System.out.println("Au revoir !");
-					w=1;
-					break;
-		
-		
-				default:
-					w=0;
-					System.out.println("Veuillez Sélectionner un choix valide !");
-					System.out.print("### Saisir : ");
-					choix = sc.nextInt();
-					break;
+				
+						default:
+							w=0;
+							System.out.println("Veuillez Sélectionner un choix valide !");
+							System.out.print("### Saisir : ");
+							choix = sc.nextInt();
+							break;
+					}
+				}while(w == 0);
+			} catch(Exception e){
+				System.out.println("Oops!! Please enter only integral numbers");
+				System.out.println(sc.next() + " was not valid input.");
+				System.out.println("Veuillez Sélectionner un choix valide !");
+				System.out.print("### Saisir : ");
+				choix = 0;
 			}
 		}while(w == 0);
-		} catch(Exception e){
-			System.out.println("Oops!! Please enter only integral numbers");
-			System.out.println(sc.next() + " was not valid input.");
-			System.out.println("Veuillez Sélectionner un choix valide !");
-			System.out.print("### Saisir : ");
-			choix = 0;
-		}}while(w == 0);
 	}
 	
 	public void welcome_screen(){
@@ -102,14 +104,18 @@ public class Menu {
 		try {
 			url = gm.recherche_partie();
 			
-			System.out.println("Partie trouvï¿½e, url : "+url);
+			System.out.println("Partie trouvee, url : "+url);
+			
+			//Aller dans le lobby
+			
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void rech_partie(){
-		ArrayList url;
+		ArrayList<String> url;
 		int p =0;
 		int w= 0;
 		int l=0;
