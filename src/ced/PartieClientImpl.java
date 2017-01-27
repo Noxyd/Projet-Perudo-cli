@@ -60,9 +60,14 @@ public class PartieClientImpl implements PartieClient {
 	}
 	
 	public void orderInGame(ArrayList<String> ordreJ){
-		String psd;
+		String psd =null;
 		for(int i = 0; i < ordreJ.size(); i++) { 
-		    psd = partie_server.urlPseudo(ordreJ.get(i));
+		    try {
+				psd = partie_server.urlPseudo(ordreJ.get(i));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		    System.out.print("Joueur n°"+(i+1)+". ");
 		    System.out.println(psd);
 		}  
@@ -71,24 +76,42 @@ public class PartieClientImpl implements PartieClient {
 	public void yourDice(){
 		
 		ArrayList dice = new ArrayList<Integer>();
-		dice = partie_server.recupDe(this.url);
+		try {
+			dice = partie_server.recupDe(this.url);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(dice);
 		
 	}
 	
 	public void currentPlayerAdvertise(String url){
-		String psd;
-		psd = partie_server.urlPseudo(url);
+		String psd = null;
+		try {
+			psd = partie_server.urlPseudo(url);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("C'est au tour de "+psd+" de jouer.");
 		
 	}
 	
 	public void currentBetAdvertise(String url, int nb1, int nb2){
-		String psd = partie_server.urlPseudo(url);
+		String psd = null;
+		try {
+			psd = partie_server.urlPseudo(url);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(psd + "a annoncer "+nb1+" dés de "+nb2);
 	}
 	
-	public void bet(int nbMiseOld, int valMiseOld){
+	
+	public ArrayList<Integer> bet(int nbMiseOld, int valMiseOld){
+		
 		int p =0;
 		int w = 0;
 		int nbMiseNew, valMiseNew;
@@ -134,39 +157,98 @@ public class PartieClientImpl implements PartieClient {
 			  
 		  case 3:		//il annonce mise
 			
-			  System.out.println("Vous avez decide de surencherir sur "+nbMiseOld+ "dés de "+valMiseOld);
-			  
-			  do{	  
-				  try{
-					  System.out.println("Vuillez selectionner votre surenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
-					  Scanner scs = new Scanner(System.in);
-					  miseString = scs.nextLine();
-					  miseString.useDelimiter
+			  	int z=0;
+			  	int x=0;
+				nbMiseNew=0;
+				valMiseNew = 0 ;
+//				ArrayList result = new ArrayList<Integer>();
+				
+				 System.out.println("Vous avez decide de surencherir sur "+nbMiseOld+ " dés de "+valMiseOld);
+				 System.out.println("Veuillez selectionner votre surenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
+				  do{	  
+					  try{
+						  if(z==1){
+							  System.out.println("La valeur que vous avez entre n'est pas possible pour surencherir");
+							  System.out.println("Veuillez entrer une valeur correcte :");
+						  }
+						  Scanner scs = new Scanner(System.in);
+						  miseString = scs.nextLine();
+						  String tabval[] = miseString.split("-");
+						  
+						  for (int i = 0; i <2; i++) {
+						      try {
+						    	  resultChx.remove(0);
+						      }catch(Exception e){
+//						    	  System.out.println("Erreur lors du recyclage ArrayList");
+						      }
+						  }
+						  if (tabval.length == 2){
+						  
+						      try {
+						    	 for ( int y = 0; y < tabval.length; y++) {
+						          resultChx.add(y,Integer.parseInt(tabval[y]));
+						      } }catch (NumberFormatException nfe) {
+						        System.out.println("Format incorrect, veuillez entrer des entiers");
+						        resultChx.add(0,0);
+						      }
+					 		  
+						  }else{
+							  System.out.println("Format incorrect veuillez entrer un format de type x-y");
+						        resultChx.add(0,0);
+						  }
+					
 					  
-				  }catch(Exception e){
+						  }
+					    catch(Exception e){
+						  System.out.println("Erreur entrée");
+						  resultChx.add(0,0);
+					  }
 					  
-				  }
-			  }while(1);
-			  
-	          input.useDelimiter("#;.");
-	          String s = "";
-	          while (input.hasNextInt()) {
-	                   s +=(input.nextInt()) + "\n";
-	           
-	          }
-	          System.out.println(s);
-			  
+					   z=1;
+					   if ((Integer)resultChx.get(0) >= nbMiseOld && (Integer)resultChx.get(1) > valMiseOld){
+						   if ((Integer)resultChx.get(1) >6){
+							   x=0;
+							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
+						   }else{
+							   x=1;
+						   }
+					   }else if((Integer)resultChx.get(0) > nbMiseOld && (Integer)resultChx.get(1) >= valMiseOld){
+						   if ((Integer)resultChx.get(1) >6){
+							   x=0;
+							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
+						   }else{
+							   x=1;
+						   }
+					   }else{
+						   x=0;
+					   }
+					   
+					   
+					   
+				  }while(x==0);
 				  
-			break;
-		}
+				  //Changer retour suivant rmi serveur pour renvoyer l'arraylist
+				 // System.out.println("result"+result);
+				  
+				 
+				  
+				  }
+		return resultChx;
 		
 	}
 	
 	public void resultAdvertise(String urlJ1, String urlJ2, int chx, boolean result){
 		
-		String psdJprec, psdJcure;
-		psdJprec = partie_server.urlPseudo(urlJ1);
-		psdJcure = partie_server.urlPseudo(urlJ2);
+		String psdJprec = null;
+		String psdJcure = null;
+		try {
+			psdJprec = partie_server.urlPseudo(urlJ1);
+			psdJcure = partie_server.urlPseudo(urlJ2);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		
 		switch (chx){
 		
