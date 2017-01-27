@@ -15,9 +15,9 @@ public interface PartieInt extends java.rmi.Remote{
 	
 	public void listerJoueurs() throws RemoteException;
 	
-	public String urlPseudo(String url);
+	public String urlPseudo(String url) throws java.rmi.RemoteException;
 	
-	public ArrayList recupDe(String url);
+	public ArrayList recupDe(String url) throws java.rmi.RemoteException;
 
 
 }

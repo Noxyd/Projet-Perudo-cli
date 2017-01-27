@@ -88,10 +88,13 @@ public class PartieClientImpl implements PartieClient {
 		System.out.println(psd + "a annoncer "+nb1+" dés de "+nb2);
 	}
 	
-	public void bet(){
+	public void bet(int nbMiseOld, int valMiseOld){
 		int p =0;
 		int w = 0;
+		int nbMiseNew, valMiseNew;
 		Scanner s = new Scanner(System.in);
+		ArrayList resultChx = new ArrayList<Integer>();
+		String miseString;
 		
 		System.out.println("C'est a vous de jouer:");
 		System.out.println("======================");
@@ -119,18 +122,67 @@ public class PartieClientImpl implements PartieClient {
 		}while(w==0);
 		
 		switch (p) {
-		  case 1:		//il annonce menteur
-			  //partie_serveur.menteur();
-		    break;
-		  case 2:		//il annnonce tout pile
-			  //partie_serveur.toutPile();
-		    break;
-		  case 3:		//il annonce mise
-			 
+		  case 1://il annonce menteur
 			  
-			  //recuperer derniere mise et faire test correspondant puis appeller methode serveur correspondante
-			  //partie_serveur.miser();			  
+			  resultChx.add(0);
+			  break;
+			  
+		  case 2:		//il annnonce tout pile
+			  
+			  resultChx.add(1);
+			  break;
+			  
+		  case 3:		//il annonce mise
+			
+			  System.out.println("Vous avez decide de surencherir sur "+nbMiseOld+ "dés de "+valMiseOld);
+			  
+			  do{	  
+				  try{
+					  System.out.println("Vuillez selectionner votre surenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
+					  Scanner scs = new Scanner(System.in);
+					  miseString = scs.nextLine();
+					  miseString.useDelimiter
+					  
+				  }catch(Exception e){
+					  
+				  }
+			  }while(1);
+			  
+	          input.useDelimiter("#;.");
+	          String s = "";
+	          while (input.hasNextInt()) {
+	                   s +=(input.nextInt()) + "\n";
+	           
+	          }
+	          System.out.println(s);
+			  
+				  
 			break;
+		}
+		
+	}
+	
+	public void resultAdvertise(String urlJ1, String urlJ2, int chx, boolean result){
+		
+		String psdJprec, psdJcure;
+		psdJprec = partie_server.urlPseudo(urlJ1);
+		psdJcure = partie_server.urlPseudo(urlJ2);
+		
+		switch (chx){
+		
+			case 1 : //Menteur
+				
+				System.out.println(psdJcure+" a annoncer que " +psdJprec+" etait un menteur");
+				break;
+			
+			case 2 : // Toutpile
+				
+				break;
+				
+			default :
+				
+				break;
+				
 		}
 		
 	}
