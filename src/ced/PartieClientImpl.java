@@ -242,15 +242,6 @@ public class PartieClientImpl implements PartieClient {
 		String psdJprec = null;
 		String psdJcure = null;
 		
-		try {
-			psdJprec = partie_server.urlPseudo(urlJ1);
-			psdJcure = partie_server.urlPseudo(urlJ2);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-		
 		switch (chx){
 		
 			case 1 : //Menteur

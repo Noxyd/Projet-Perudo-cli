@@ -10,8 +10,12 @@ public interface PartieInt extends java.rmi.Remote{
 	
 	public boolean getState() throws java.rmi.RemoteException;
 	
-	public void setState(boolean value) throws java.rmi.RemoteException;
+	public void setState(String url,boolean value) throws java.rmi.RemoteException;
 	
 	public void listerJoueurs() throws RemoteException;
-
+	
+	public String[] getListePseudos() throws RemoteException;
+	
+	public void isReady(String url) throws RemoteException;
+	
 }

@@ -99,6 +99,9 @@ public class Menu {
 	}
 	
 	public void jouer_partie(){
+		
+		Thread th_partie_courante = new Thread(partie_courante);
+		
 		String url;
 		System.out.println("======================");
 		System.out.println("PERUDO by STRI | Jouer une partie Rapide");
@@ -111,6 +114,8 @@ public class Menu {
 			System.out.println("Partie trouvee, url : "+url);
 			
 			//Aller dans le lobby
+		
+			th_partie_courante.start();
 			
 			partie_courante.lobby(url);
 			
