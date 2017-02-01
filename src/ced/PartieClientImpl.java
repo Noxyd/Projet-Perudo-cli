@@ -241,6 +241,7 @@ public class PartieClientImpl implements PartieClient {
 		
 		String psdJprec = null;
 		String psdJcure = null;
+		
 		try {
 			psdJprec = partie_server.urlPseudo(urlJ1);
 			psdJcure = partie_server.urlPseudo(urlJ2);
@@ -254,11 +255,12 @@ public class PartieClientImpl implements PartieClient {
 		
 			case 1 : //Menteur
 				
-				System.out.println(psdJcure+" a annoncer que " +psdJprec+" etait un menteur");
+				System.out.println(psdJcure+" a annoncer que " +psdJprec+" etait un menteur.");
+				
 				break;
 			
 			case 2 : // Toutpile
-				
+				System.out.println(psdJcure+" a annoncer tout pile sur la mise de " +psdJprec+".");
 				break;
 				
 			default :
