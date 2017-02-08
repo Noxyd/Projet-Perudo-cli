@@ -2,36 +2,52 @@ package perudoV2;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
+import java.rmi.registry.LocateRegistry;
 
-//Client
+//Server
 public class Main {
-
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(System.in);
-		String pseudo, url;
-		
-		System.out.println("Saisir votre pseudo :");
-		pseudo = sc.nextLine();
-		url = pseudo;
 		try {
 			
-			ClientsImpl client_1 = new ClientsImpl(pseudo, url);
+			/*GameImpl game = new GameImpl();
+			GameControl gc = new GameControl(game, 1);
+			Thread thGC = new Thread(gc);
 			
-			Game game_1 = (Game)Naming.lookup("rmi://localhost:1099/game-1");
-			if(game_1.connexion(client_1) != 100){
-				System.out.println("Erreur lors de la connexion.");
-			} else {
-				System.out.println(client_1.getName()+" est connecté.");
-			}	
+			System.out.println("[SERVER ONLINE]");
 			
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+			//Turn on the registry
+			LocateRegistry.createRegistry(1099);
+			
+			//Bind url with the shared game object
+			Naming.rebind("game-1", game);
+			
+			//This thread check if there is enough clients to begin
+			thGC.start();
+			
+			//The game wait for the notify of the GC
+			game.round();*/
+			
+			GameManagerImpl gm = new GameManagerImpl();
+			
+			//Turn on the registry
+			LocateRegistry.createRegistry(1099);
+			
+			System.out.println("[SERVER ONLINE]");
+			
+			//Bind url with the shared game object
+			Naming.rebind("main-gm", gm);
+			
+			//Create games
+			gm.creer_partie();
+			gm.creer_partie();
+			
+		} catch (RemoteException | MalformedURLException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 	}
-
 }
