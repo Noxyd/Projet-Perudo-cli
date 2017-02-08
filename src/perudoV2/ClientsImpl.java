@@ -1,4 +1,4 @@
-package perudoV1;
+package perudoV2;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
