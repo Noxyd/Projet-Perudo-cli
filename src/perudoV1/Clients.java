@@ -10,7 +10,7 @@ public interface Clients extends Remote {
 	
 	public String getURL() throws RemoteException;
 	
-	public ArrayList<Integer> choice(int round,int nbMiseOld, int valMiseOld)throws RemoteException;
+	public ArrayList<Integer> choice(int round,int nbMiseOld, int valMiseOld, boolean fPlayer)throws RemoteException;
 	
 	public void printString(String chaine)throws RemoteException;
 	

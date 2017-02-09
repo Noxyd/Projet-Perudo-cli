@@ -28,16 +28,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		return this.url;
 	}
 	
-	public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld)throws RemoteException{
-		//Joueur la partie ici
-		/*int choix;
-		
-		System.out.println("Quel est votre choix  ? [1 ou 2]");
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(System.in);
-		choix = sc.nextInt();
-		
-		return choix;*/
+	public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld, boolean fPlayer)throws RemoteException{
 		
 		int p =0;
 		int w = 0;
@@ -45,14 +36,24 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		ArrayList<Integer> resultChx = new ArrayList<Integer>();
 		String miseString;
 		
-		System.out.println("C'est a vous de jouer:");
-		System.out.println("======================");
-		System.out.println("");
-		System.out.println("1/ Annoncer menteur");
-		System.out.println("2/ Annoncer tout pile");
-		System.out.println("3/ Surencherir");
-		System.out.println("");
-		System.out.println("");
+		if(fPlayer){
+			System.out.println("C'est a vous de jouer:");
+			System.out.println("======================");
+			System.out.println("");
+			System.out.println("1/ Surencherir");
+			System.out.println("");
+			System.out.println("");
+		} else {
+			System.out.println("C'est a vous de jouer:");
+			System.out.println("======================");
+			System.out.println("");
+			System.out.println("1/ Annoncer menteur");
+			System.out.println("2/ Annoncer tout pile");
+			System.out.println("3/ Surencherir");
+			System.out.println("");
+			System.out.println("");
+		}
+		
 		
 		do{
 			try {
@@ -68,6 +69,9 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 				System.out.println("Oops!! Please enter only integral numbers");
 				System.out.println(s.next() + " was not valid input.");
 				w=0;
+			}
+			if(fPlayer){
+				p = 3;
 			}
 		}while(w==0);
 		
