@@ -43,6 +43,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 			System.out.println("1/ Surencherir");
 			System.out.println("");
 			System.out.println("");
+			System.out.println("Vos des : "+this.getDes());
 		} else {
 			System.out.println("C'est a vous de jouer:");
 			System.out.println("======================");
@@ -52,6 +53,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 			System.out.println("3/ Surencherir");
 			System.out.println("");
 			System.out.println("");
+			System.out.println("Vos des : "+this.getDes());
 		}
 		
 		
