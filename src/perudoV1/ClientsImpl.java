@@ -81,7 +81,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		  case 1://il annonce menteur
 			  
 			  resultChx.add(0);
-			  System.out.println(resultChx);
+			  //System.out.println(resultChx);
 			  break;
 			  
 		  case 2:		//il annnonce tout pile
