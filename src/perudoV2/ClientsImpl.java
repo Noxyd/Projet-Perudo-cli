@@ -37,12 +37,8 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		String miseString;
 		
 		if(fPlayer){
-			System.out.println("C'est a vous de jouer:");
+			System.out.println("Vous etes le premier jpueur, c'est a vous de jouer:");
 			System.out.println("======================");
-			System.out.println("");
-			System.out.println("1/ Surencherir");
-			System.out.println("");
-			System.out.println("");
 			System.out.println("Vos des : "+this.getDes());
 		} else {
 			System.out.println("C'est a vous de jouer:");
@@ -58,6 +54,10 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		
 		
 		do{
+			if(fPlayer){
+				p = 3;
+				w=1;
+			}else{
 			try {
 				System.out.println("Veuillez selectionner l'action que vous voulez réaliser :");
 				p = s.nextInt();
@@ -72,10 +72,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 				System.out.println(s.next() + " was not valid input.");
 				w=0;
 			}
-			if(fPlayer){
-				p = 3;
-			}
-		}while(w==0);
+		}}while(w==0);
 		
 		switch (p) {
 		  case 1://il annonce menteur
@@ -93,9 +90,13 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 			
 			  	int z=0;
 			  	int x=0;
-				
-				 System.out.println("Vous avez decide de surencherir sur "+nbMiseOld+ " dés de "+valMiseOld);
-				 System.out.println("Veuillez selectionner votre surenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
+				if (fPlayer){
+					 System.out.println("Vous etes le premier joueur, veuillez selectionner votre erenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
+				}else{
+					 System.out.println("Vous avez decide de surencherir sur "+nbMiseOld+ " dés de "+valMiseOld);
+					 System.out.println("Veuillez selectionner votre surenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
+				}
+			
 				  do{	  
 					  try{
 						  if(z==1){
@@ -140,13 +141,18 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 						   if ((Integer)resultChx.get(1) >6){
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
-						   }else{
+						   }else if((Integer)resultChx.get(0) == 0){
+							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
+						   }
+						   else{
 							   x=1;
 						   }
 					   }else if((Integer)resultChx.get(0) > nbMiseOld && (Integer)resultChx.get(1) >= valMiseOld){
 						   if ((Integer)resultChx.get(1) >6){
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
+						   }else if((Integer)resultChx.get(0) == 0){
+							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
 						   }else{
 							   x=1;
 						   }
