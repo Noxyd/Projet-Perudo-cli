@@ -3,6 +3,7 @@ package perudoV2;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 @SuppressWarnings("serial")
@@ -27,16 +28,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		return this.url;
 	}
 	
-	public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld)throws RemoteException{
-		//Joueur la partie ici
-		/*int choix;
-		
-		System.out.println("Quel est votre choix  ? [1 ou 2]");
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(System.in);
-		choix = sc.nextInt();
-		
-		return choix;*/
+	public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld, boolean fPlayer)throws RemoteException{
 		
 		int p =0;
 		int w = 0;
@@ -44,14 +36,26 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		ArrayList<Integer> resultChx = new ArrayList<Integer>();
 		String miseString;
 		
-		System.out.println("C'est a vous de jouer:");
-		System.out.println("======================");
-		System.out.println("");
-		System.out.println("1/ Annoncer menteur");
-		System.out.println("2/ Annoncer tout pile");
-		System.out.println("3/ Surencherir");
-		System.out.println("");
-		System.out.println("");
+		if(fPlayer){
+			System.out.println("C'est a vous de jouer:");
+			System.out.println("======================");
+			System.out.println("");
+			System.out.println("1/ Surencherir");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Vos des : "+this.getDes());
+		} else {
+			System.out.println("C'est a vous de jouer:");
+			System.out.println("======================");
+			System.out.println("");
+			System.out.println("1/ Annoncer menteur");
+			System.out.println("2/ Annoncer tout pile");
+			System.out.println("3/ Surencherir");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Vos des : "+this.getDes());
+		}
+		
 		
 		do{
 			try {
@@ -68,12 +72,16 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 				System.out.println(s.next() + " was not valid input.");
 				w=0;
 			}
+			if(fPlayer){
+				p = 3;
+			}
 		}while(w==0);
 		
 		switch (p) {
 		  case 1://il annonce menteur
 			  
 			  resultChx.add(0);
+			  //System.out.println(resultChx);
 			  break;
 			  
 		  case 2:		//il annnonce tout pile
@@ -161,5 +169,53 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 	
 	public void printString(String chaine)throws RemoteException{
 		System.out.println(chaine);
+	}
+	
+	public int getNbDes()throws RemoteException{
+		return this.des.size();
+	}
+	
+	public int getVal(int key)throws RemoteException{
+		return this.des.get(key);
+	}
+	
+	public void suppDe(int nbe)throws RemoteException{
+		try {	
+			int nbede = this.getNbDes();
+			int endsize = nbede - nbe;
+		
+		
+			while(nbede != endsize){
+				des.remove(nbede-1);	
+				nbede = this.getNbDes();
+			}
+		}catch(Exception e){
+			
+		}
+	}
+	
+	public void ajoutDe1()throws RemoteException{
+		des.add(0);
+	}
+	
+	public void ajoutDe5()throws RemoteException{
+		des.add(0);
+		des.add(0);
+		des.add(0);
+		des.add(0);
+		des.add(0);
+	}
+	
+	public ArrayList<Integer> getDes()throws RemoteException{
+		return des;
+	}
+	
+	public void lancerDe() throws RemoteException{
+		 int i;
+		   for (i=0;i<this.getNbDes();i++) {
+			   Random rand = new Random();
+		       int nombreAleatoire = rand.nextInt(7 - 1) + 1;  //attention: le 7 est exclu et le 1 inclu
+		       this.des.set(i, nombreAleatoire);
+		   }		
 	}
 }
