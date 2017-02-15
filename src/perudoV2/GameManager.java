@@ -8,6 +8,7 @@ public interface GameManager extends Remote{
 	
 	public String recherche_partie() throws RemoteException;
 	public ArrayList<String> recherche_partie_list() throws RemoteException;
+	public String creer_partie_client() throws RemoteException;
 	
 	
 }

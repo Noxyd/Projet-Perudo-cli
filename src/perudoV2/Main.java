@@ -31,7 +31,8 @@ public class Main {
 		
 		System.out.println("1/ Jouer une partie Rapide");
 		System.out.println("2/ Rechercher une partie");
-		System.out.println("3/ Quitter");
+		System.out.println("3/ Creer une partie");
+		System.out.println("4/ Quitter");
 		
 		System.out.print("### Saisir : ");
 		
@@ -59,6 +60,12 @@ public class Main {
 							break;
 						
 						case 3:
+							gm.creer_partie_client();
+							//Game game_1 = (Game)Naming.lookup(game_url);
+							w=1;
+							break;
+							
+						case 4:
 							System.out.println("");
 							System.out.println("Au revoir !");
 							w=1;
