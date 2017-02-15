@@ -126,7 +126,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 					 		  
 						  }else{
 							  System.out.println("Format incorrect veuillez entrer un format de type x-y");
-						        resultChx.add(0,0);
+						      resultChx.add(0,0);
 						  }
 					
 					  
@@ -142,6 +142,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
 						   }else if((Integer)resultChx.get(0) == 0){
+							   x=0;
 							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
 						   }
 						   else{
@@ -152,6 +153,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
 						   }else if((Integer)resultChx.get(0) == 0){
+							   x=0;
 							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
 						   }else{
 							   x=1;
