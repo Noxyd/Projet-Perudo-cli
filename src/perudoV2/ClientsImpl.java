@@ -28,7 +28,9 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 		return this.url;
 	}
 	
-	public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld, boolean fPlayer)throws RemoteException{
+	
+		public ArrayList<Integer> choice(int round, int nbMiseOld, int valMiseOld, boolean fPlayer)throws RemoteException{
+	
 		
 		int p =0;
 		int w = 0;
@@ -90,6 +92,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 			
 			  	int z=0;
 			  	int x=0;
+			  	Scanner scs = new Scanner(System.in);
 				if (fPlayer){
 					 System.out.println("Vous etes le premier joueur, veuillez selectionner votre erenchere dans le format suivant x-y pour x(=nombre de dés) dés de y(=Valeur de dés)");
 				}else{
@@ -103,7 +106,6 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 							  System.out.println("La valeur que vous avez entre n'est pas possible pour surencherir");
 							  System.out.println("Veuillez entrer une valeur correcte :");
 						  }
-						  Scanner scs = new Scanner(System.in);
 						  miseString = scs.nextLine();
 						  String tabval[] = miseString.split("-");
 						  
@@ -122,11 +124,13 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 						      } }catch (NumberFormatException nfe) {
 						        System.out.println("Format incorrect, veuillez entrer des entiers");
 						        resultChx.add(0,0);
+						        System.out.println("0");
 						      }
 					 		  
 						  }else{
 							  System.out.println("Format incorrect veuillez entrer un format de type x-y");
-						        resultChx.add(0,0);
+						      resultChx.add(0,0);
+						      System.out.println("1");
 						  }
 					
 					  
@@ -134,42 +138,44 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 					    catch(Exception e){
 						  System.out.println("Erreur entrée");
 						  resultChx.add(0,0);
+						  System.out.println("2");
 					  }
-					  
 					   z=1;
+					   System.out.println("3");
+					   System.out.println(resultChx.get(0));
 					   if ((Integer)resultChx.get(0) >= nbMiseOld && (Integer)resultChx.get(1) > valMiseOld){
 						   if ((Integer)resultChx.get(1) >6){
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
 						   }else if((Integer)resultChx.get(0) == 0){
+							   x=0;
 							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
 						   }
 						   else{
-							   x=1;
+							   x=1; System.out.println("3a");
 						   }
 					   }else if((Integer)resultChx.get(0) > nbMiseOld && (Integer)resultChx.get(1) >= valMiseOld){
 						   if ((Integer)resultChx.get(1) >6){
 							   x=0;
 							   System.out.println("Ce n'est pas possible de miser sur un "+(Integer)resultChx.get(1)+"... Un dés n'a que 6 face !");
 						   }else if((Integer)resultChx.get(0) == 0){
+							   x=0;
 							   System.out.println("Ce n'est pas possible de miser 0 des de quoi que ce soit...");
 						   }else{
-							   x=1;
+							   x=1; System.out.println("3b");
 						   }
 					   }else{
+						   System.out.println("4");
 						   x=0;
 					   }
-					   
+					   System.out.println("5");
 					   
 					   
 				  }while(x==0);
 				  
-				  //Changer retour suivant rmi serveur pour renvoyer l'arraylist
-				 // System.out.println("result"+result);
-				  
 				 
 				  
-				  }
+			 }
 		return resultChx;
 	}
 	

@@ -31,7 +31,8 @@ public class Main {
 		
 		System.out.println("1/ Jouer une partie Rapide");
 		System.out.println("2/ Rechercher une partie");
-		System.out.println("3/ Quitter");
+		System.out.println("3/ Creer une partie");
+		System.out.println("4/ Quitter");
 		
 		System.out.print("### Saisir : ");
 		
@@ -59,6 +60,12 @@ public class Main {
 							break;
 						
 						case 3:
+							creer_partie(gm);
+							//Game game_1 = (Game)Naming.lookup(game_url);
+							w=1;
+							break;
+							
+						case 4:
 							System.out.println("");
 							System.out.println("Au revoir !");
 							w=1;
@@ -112,6 +119,35 @@ public class Main {
 		}
 	}
 	
+	public static void creer_partie(GameManager gm){
+		
+		
+		String pseudo, url, game_url;
+		Scanner sc = new Scanner(System.in);
+		try {
+			game_url = gm.creer_partie_client();
+			
+			System.out.println("Creation de la partie : "+game_url);
+						
+			System.out.println("\n================\nSaisir votre pseudo :");
+			pseudo = sc.nextLine();
+			url = pseudo;
+			
+			ClientsImpl client_1 = new ClientsImpl(pseudo, url);
+			Game game_1 = (Game)Naming.lookup(game_url);
+			
+			if(game_1.connexion(client_1) != 100){
+				System.out.println("Erreur lors de la connexion.");
+			} else {
+				System.out.println(client_1.getName()+" est connecté.");
+			}
+			
+		} catch (RemoteException | MalformedURLException | NotBoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void rech_partie(GameManager gm){
 		ArrayList<String> url;
 		
@@ -125,7 +161,7 @@ public class Main {
 		try {
 			url = gm.recherche_partie_list();
 			l = url.size();
-			System.out.println("Partie trouvï¿½e(s):");
+			System.out.println("Partie trouvée(s):");
 			for(int i = 0; i < url.size(); i++) { 
 				System.out.print((i+1)+". ");
 			    System.out.println(url.get(i));
