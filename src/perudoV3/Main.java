@@ -1,4 +1,4 @@
-package perudoV2;
+package perudoV3;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -39,8 +39,6 @@ public class Main {
 		do{
 			try {
 				choix = sc.nextInt();
-		
-		
 				do{
 					switch (choix) {
 						case 1:
@@ -60,8 +58,32 @@ public class Main {
 							break;
 						
 						case 3:
-							creer_partie(gm);
-							//Game game_1 = (Game)Naming.lookup(game_url);
+							
+							String pseudo, url;
+							
+							System.out.println("A");
+							GameImpl game = new GameImpl();
+							
+							Naming.rebind(game.getId(), game);
+							System.out.println("B "+game.getId());
+							gm.declarer_partie(game.getId());
+							System.out.println("C");
+							Thread thGame = new Thread(game);
+							
+							thGame.start();
+							System.out.println("D");
+							System.out.println("Saisir votre pseudo :");
+							pseudo = sc.nextLine();
+							url = pseudo;
+							
+							ClientsImpl client_1 = new ClientsImpl(pseudo, url);
+							
+							if(game.connexion(client_1) != 100){
+								System.out.println("Erreur lors de la connexion.");
+							} else {
+								System.out.println(client_1.getName()+" est connecté.");
+							}
+							
 							w=1;
 							break;
 							
@@ -80,7 +102,7 @@ public class Main {
 							break;
 					}
 				}while(w == 0);
-			} catch(Exception e){
+			} catch(RemoteException | MalformedURLException e){
 				System.out.println("Oops!! Please enter only integral numbers");
 				System.out.println(sc.next() + " was not valid input.");
 				System.out.println("Veuillez Sélectionner un choix valide !");
