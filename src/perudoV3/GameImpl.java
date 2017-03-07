@@ -13,17 +13,17 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 	private boolean state;
 	private boolean notWait1 = false;
 	private String id_game;
-	
+	private GameManager gm;
 	
 	private final int NB_MAX_CLIENT = 2;
 	private final int NB_ROUND = 5;
 	
-	public GameImpl() throws RemoteException{
+	public GameImpl(GameManager gm) throws RemoteException{
 		super();
 		this.clients_list = new ArrayList<Clients>();
 		this.state = false;
 		this.id_game = "perudo-"+generer_chaine();
-
+		this.gm = gm;
 	}
 	
 	public void run(){
@@ -42,7 +42,7 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 
 		clients_list.add(cli);
 		
-		System.out.println(cli.getName()+" s'est connecte.");
+		this.gm.afficher(cli.getName()+" s'est connecte.");
 		
 		if(this.getSize() == NB_MAX_CLIENT){
 			
@@ -112,14 +112,14 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 					
 					for(Clients cli : this.clients_list){
 						cli.ajoutDe5();
-						System.out.println("Initialisation des d�s pour "+cli.getName()+" :\n"+cli.getDes()+"\n");
+						this.gm.afficher("Initialisation des d�s pour "+cli.getName()+" :\n"+cli.getDes()+"\n");
 					}
 					while(!end_game){
 						//Begening of the round
 						first_player = true;
 						for(Clients cli : this.clients_list){
 							cli.lancerDe();
-							System.out.println("D�s de "+cli.getName()+" :\n"+cli.getDes()+"\n");
+							this.gm.afficher("D�s de "+cli.getName()+" :\n"+cli.getDes()+"\n");
 						}
 						
 						do{
@@ -142,7 +142,7 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 										client_choice = cli.choice(round,(int)mise_precedente.get(0),(int)mise_precedente.get(1),first_player);
 									}
 	
-									System.out.println("Choix de "+cli.getName()+" : "+client_choice);
+									this.gm.afficher("Choix de "+cli.getName()+" : "+client_choice);
 									
 									int choixAnnonce = 0;
 	
@@ -162,7 +162,7 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 									} //toutpile 
 									else {
 										choixAnnonce = 1; 
-										System.out.println("choix MISE");
+										this.gm.afficher("choix MISE");
 									}
 	
 									switch (choixAnnonce) {
@@ -237,14 +237,14 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 						}while(test != true);
 	
 						for(Clients cli : this.clients_list){
-							System.out.println(cli.getName()+" : "+cli.getDes());
+							this.gm.afficher(cli.getName()+" : "+cli.getDes());
 						}
 	
 						//Increment the round : new round
 						round++;
 						test = false;
 						//Inform the clients of the new round
-						System.out.println("Nouvelle manche : "+round);
+						this.gm.afficher("Nouvelle manche : "+round);
 						for(Clients client : this.clients_list){
 							client.printString("[INFO] Fin de la manche "+(round-1)+".");
 						}
@@ -258,7 +258,7 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 						}
 					}
 					//End of game
-					System.out.println("Fin de la partie.");
+					this.gm.afficher("Fin de la partie.");
 					for(Clients client : this.clients_list){
 						client.printString("[INFO] Fin de la partie.");
 					}

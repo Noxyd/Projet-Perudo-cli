@@ -10,5 +10,5 @@ public interface GameManager extends Remote{
 	public ArrayList<String> recherche_partie_list() throws RemoteException;
 	public String creer_partie_client() throws RemoteException;
 	public void declarer_partie(String url) throws RemoteException;
-	
+	public void afficher(String texte) throws RemoteException;
 }

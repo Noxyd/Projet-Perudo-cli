@@ -61,28 +61,15 @@ public class Main {
 							
 							String pseudo, url;
 							
-							System.out.println("A");
-							GameImpl game = new GameImpl();
+							GameImpl game = new GameImpl(gm);
 							
 							Naming.rebind(game.getId(), game);
-							System.out.println("B "+game.getId());
 							gm.declarer_partie(game.getId());
-							System.out.println("C");
 							Thread thGame = new Thread(game);
 							
 							thGame.start();
-							System.out.println("D");
-							System.out.println("Saisir votre pseudo :");
-							pseudo = sc.nextLine();
-							url = pseudo;
 							
-							ClientsImpl client_1 = new ClientsImpl(pseudo, url);
-							
-							if(game.connexion(client_1) != 100){
-								System.out.println("Erreur lors de la connexion.");
-							} else {
-								System.out.println(client_1.getName()+" est connecté.");
-							}
+							rejoindre(game);
 							
 							w=1;
 							break;
@@ -139,6 +126,29 @@ public class Main {
 		} catch (RemoteException | MalformedURLException | NotBoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void rejoindre(GameImpl game) throws RemoteException{
+		
+		String pseudo, url, game_url;
+		Scanner sc = new Scanner(System.in);
+											
+			System.out.println("Saisir votre pseudo :");
+			pseudo = sc.nextLine();
+			url = pseudo;
+			
+			ClientsImpl client_1 = new ClientsImpl(pseudo, url);
+			
+			try {
+				if(game.connexion(client_1) != 100){
+					System.out.println("Erreur lors de la connexion.");
+				} else {
+					System.out.println(client_1.getName()+" est connecté.");
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}	
+
 	}
 	
 	public static void creer_partie(GameManager gm){
