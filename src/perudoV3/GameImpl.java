@@ -14,6 +14,8 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 	private boolean notWait1 = false;
 	private String id_game;
 	private GameManager gm;
+	private String ret;
+
 	
 	private final int NB_MAX_CLIENT = 2;
 	private final int NB_ROUND = 5;
@@ -109,6 +111,10 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 						clients.printString("[INFO] La partie va commencer.");
 					}
 					//Begining of the game
+
+					GameControl gc = new GameControl(this, clients_list);
+					Thread quit = new Thread(gc);
+					quit.start();
 					
 					for(Clients cli : this.clients_list){
 						cli.ajoutDe5();
@@ -351,5 +357,31 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 	    }
 	    
 	    return chaine;
+	}
+	
+	public void setRet(String ret) {
+		this.ret = ret;
+	}
+	
+	public String getRet() {
+		return ret;
+	}
+	//suprimer le client en mode propre pck erreur rmi
+	void supRet() throws RemoteException{
+		int i;
+		String cliname = getRet();
+		for (i=0;i<clients_list.size();i++) {
+		   if(cliname == clients_list.get(i).getName()){
+			clients_list.remove(i);
+		   }
+		}
+	}
+	
+	public void dispEnd() throws RemoteException{
+		int i;
+		for (i=0;i<clients_list.size();i++) {
+			clients_list.get(i).printString("Un client est parti subitement, la partie est terminée.");	
+		}
+		
 	}
 }
