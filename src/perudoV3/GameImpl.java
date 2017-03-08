@@ -5,19 +5,33 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Classe GameImpl.
+ * Classe représentant une partie, c'est ici que s'execute le thread de partie.
+ * 
+ * @author Groupe Garcia, Lesaichot, Tavera - STRI
+ * 
+ */
 
 @SuppressWarnings("serial")
 public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 	
+	//attributs
 	private ArrayList<Clients> clients_list;
 	private boolean state;
 	private boolean notWait1 = false;
 	private String id_game;
 	private GameManager gm;
 	
+	//constantes
 	private final int NB_MAX_CLIENT = 2;
 	private final int NB_ROUND = 5;
 	
+	/**
+	 * Le constructeur permet d'initialiser une liste contenant les clients.
+	 * 
+	 * @throws RemoteException
+	 */
 	public GameImpl(GameManager gm) throws RemoteException{
 		super();
 		this.clients_list = new ArrayList<Clients>();
@@ -26,18 +40,37 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 		this.gm = gm;
 	}
 	
+	/**
+	 * Ouvre un thread pour débuter une partie
+	 * 
+	 */
 	public void run(){
 		this.round();
 	}
 	
+	/**
+	 * Ouvre un thread pour débuter une partie
+	 * 
+	 * @return clients_list.size();
+	 */
 	public int getSize(){
 		return clients_list.size();
 	}
 	
+	/**
+	 * Retourne l'ID de la partie
+	 * 
+	 * @return String id_game
+	 */
 	public String getId(){
 		return this.id_game;
 	}
 	
+	/**
+	 * Permet à un client de s'enregistrer dans une partie.
+	 * 
+	 * @return int 100;
+	 */
 	public synchronized int connexion(Clients cli)throws RemoteException{
 
 		clients_list.add(cli);
@@ -54,7 +87,7 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 
 	}
 	
-	public void ready()throws RemoteException{
+	/*public void ready()throws RemoteException{
 		synchronized(this){
 			for(Clients cli : this.clients_list){
 				cli.printString("[INFO] La partie va commencer.");
@@ -66,9 +99,12 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 			}
 			notify();
 		}
-	}
+	}*/
 	
-	
+	/**
+	 * Permet d'afficher un client ainsi que son URL.
+	 * 
+	 */
 	public void print_clients(){
 			for(Clients cli : this.clients_list){
 				try {
@@ -79,6 +115,11 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 			}
 	}
 	
+	/**
+	 * Permet de jouer une partie. Cela signifie que le serveur est en mesure d'héberger une partie.
+	 * Tous les traitements de jeux sont effectués au sein de cette méthode.
+	 * 
+	 */
 	public void round(){
 
 		ArrayList<Integer> client_choice;
@@ -271,8 +312,8 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 		}
 
 	}
-
-	public void resultAdvertise(String j1, String j2, int chx, boolean result){
+	
+	/*public void resultAdvertise(String j1, String j2, int chx, boolean result){
 		
 		switch (chx){
 		
@@ -292,16 +333,30 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 				
 		}
 		
-	}
+	}*/
 	
+	/**
+	 * Permet de connaître l'état d'une partie (en cours ou non).
+	 * 
+	 * @return boolean state
+	 */
 	public boolean getState(){
 		return this.state;
 	}
 	
+	/**
+	 * Permet de modifier l'état d'une partie (en cours ou non).
+	 * 
+	 */
 	public void setState(boolean n_state){
 		this.state = n_state;
 	}
 	
+	/**
+	 * Affiche le total des dés en fin de partie
+	 * 
+	 * @return int[][] tab_res
+	 */
 	public int[][] total_des(){
 
 		int[][] tab_res = new int [2][6];
@@ -339,6 +394,11 @@ public class GameImpl extends UnicastRemoteObject implements Game, Runnable {
 
 	}
 	
+	
+	/**
+	 * Permet de générer une chaine de caractères alpha-numériques.
+	 * @return String chaine
+	 */
 	public String generer_chaine(){
 		
 	    String caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; 

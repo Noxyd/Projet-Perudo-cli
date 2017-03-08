@@ -111,7 +111,6 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 						      try {
 						    	  resultChx.remove(0);
 						      }catch(Exception e){
-//						    	  System.out.println("Erreur lors du recyclage ArrayList");
 						      }
 						  }
 						  if (tabval.length == 2){
@@ -164,12 +163,7 @@ public class ClientsImpl extends UnicastRemoteObject implements Clients {
 					   
 					   
 					   
-				  }while(x==0);
-				  
-				  //Changer retour suivant rmi serveur pour renvoyer l'arraylist
-				 // System.out.println("result"+result);
-				  
-				 
+				  	}while(x==0);
 				  
 				  }
 		return resultChx;
